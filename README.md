@@ -1,5 +1,5 @@
 # Clustering-de-sujets-en-utilisant-l-algorithme-de-Latent-Dirichlet-Allocation-LDA-
-
+l'algorithme de Latent Dirichlet Allocation
 Clustering de sujets en utilisant LDA
 Ce projet vise à regrouper des documents en clusters de sujets similaires en utilisant l'algorithme de Latent Dirichlet Allocation (LDA). Le code est écrit en Python et utilise la bibliothèque Gensim pour implémenter LDA.
 
