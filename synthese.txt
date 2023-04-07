@@ -1,0 +1,54 @@
+		objectife:Création d'un Jupyter Notebook pour le topic clustering avec l'algorithme Latent Dirichlet Allocation
+
+--------------------------------------------------------------------1/importing labraries----------------------------------------------------------------------------
+
+Le code commence par importer diverses bibliothèques et modules pour le traitement de texte et le machine learning tels que numpy, pandas, sklearn, nltk, re, wikipedia, gensim et pyLDAvis. 
+------------------------------------------------------2/Récupère le contenu de l'article "Python (langage)"----------------------------------------------------------
+Il récupère ensuite un article sur la page Wikipédia de Python (langage) grâce à la bibliothèque wikipedia,avec le code suivant:
+ 
+	page = wikipedia.page("Python (langage)")
+	article = page.content 
+
+et le convertit en un objet DataFrame grâce à pandas. Il enregistre ensuite le DataFrame sous forme de fichier CSV.
+
+---------------------------------------------------------------------3/Data cleaning:-------------------------------------------------------------------------------
+
+Ensuite, le code définit une fonction de prétraitement de texte nommée preprocess_text() qui applique une série de normalisations et de traitements sur l'article. Cette fonction supprime la ponctuation, les chiffres et les répétitions de lettres.Elle prend également en compte les contenus entre parenthèses et les répétitions de phrases,Cette étape est importante car elle prépare le texte pour une analyse plus efficace en éliminant les éléments inutiles ou redondants.
+
+Ensuite, la fonction word_tokenize de la bibliothèque NLTK est utilisée pour diviser le texte en mots. Cette étape est importante car elle permet de convertir le texte brut en une liste de mots distincts, qui peuvent être ensuite analysés plus facilement.
+
+la Il télécharge également la liste des stopwords en anglais et les supprime du l'article pour ne conserver que les mots pertinents.
+
+	nlt.download('stopwords')
+	stop_words = set(stopwords.words('english'))
+	tokens = [word for word in tokens_alphabetic_only if word.lower() not in stop_words]
+
+et ici il utilise également le module WordNetLemmatizer pour réduire les mots à leur forme de base.
+
+	nlt.download('wordnet')
+	lemmatizer = WordNetLemmatizer()
+	lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
+
+Enfin, il utilise le module gensim pour créer un dictionnaire à partir des tokens lemmatisés et une matrice document-terme à partir de ce dictionnaire.
+
+----------------------------------------------------------------4/Model building---------------------------------------------------------------------------------------
+
+dans cette partie le code effectue le "training" d'un modèle Latent Dirichlet Allocation à partir de la matrice (document-terme).Le nombre de sujets à extraire est fixé à 4. Le modèle est entraîné à partir de la matrice (document-terme) et du dictionnaire créé à partir des tokens lemmatisés. 
+
+les mots associés à chaque sujet sont affichés à l'écran comme suite:
+
+Topic 0: python, language, statement, used,expression, programming, us, code, use, including											
+Topic 1: python, language, statement, programming, library, operator, expression, used, code, program
+
+Topic 2: python, language, programming,statement, use, code, used, expression, version, program
+
+Topic 3: python, language, programming, used, expression, code, statement, library, operator, also
+
+----------------------------------------------------------------5/Visualisation---------------------------------------------------------------------------------------
+	
+	pyLDAvis.enable_notebook()
+	vis = pyLDAvis.gensim_models.prepare(lda_model, doc_term_matrix, dictionary)
+	vis
+
+La dernière partie du code est dédiée à la visualisation du modèle LDA entraîné. Pour cela, la bibliothèque pyLDAvis est installée et utilisée pour préparer les données à visualiser.
+
